@@ -8,6 +8,6 @@ import (
 func taxRoutes(e *echo.Echo) {
 	tax := e.Group("/tax")
 
-	taxController := controllers.TaxController{}
-	tax.POST("/calculations", taxController.CalculateTax)
+	tCl := controllers.TaxController{}
+	tax.POST("/calculations", tCl.CalculateTaxHandler)
 }
