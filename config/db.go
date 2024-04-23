@@ -8,7 +8,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func InitDB() {
+type DB struct {
+	*sql.DB
+}
+
+func InitDB() (*DB, error) {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)
@@ -22,4 +26,6 @@ func InitDB() {
 	}
  
 	log.Println("Connected to database")
+
+	return &DB{db}, nil
 }
