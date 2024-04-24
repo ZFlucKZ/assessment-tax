@@ -1,19 +1,28 @@
 package handlers
 
-import "github.com/ZFlucKZ/assessment-tax/dto"
+import (
+	"github.com/ZFlucKZ/assessment-tax/dto"
+)
 
 func CalculateTotalTax(taxDetails *dto.Tax) float64 {
 	// Find Allowance type Personal From TaxDetails Allowances
 	personalAllowance := dto.AllowanceType{}
+	donationAllowance := dto.AllowanceType{}
+	// kReceiptAllowance := dto.AllowanceType{}
 	for _, allowance := range taxDetails.Allowances {
 		if allowance.AllowanceType == "Personal" {
 			personalAllowance = allowance
-			break
+		} else if allowance.AllowanceType == "donation" {
+			donationAllowance = allowance
+		} else if allowance.AllowanceType == "k-receipt" {
+			// kReceiptAllowance := allowance
 		}
 	}
 
 	taxDetails.TotalIncome = calculatePersonalDeductionTax(taxDetails.TotalIncome, personalAllowance.Amount)
-
+	
+	taxDetails.TotalIncome = calculateDonationDeductionTax(taxDetails.TotalIncome, donationAllowance.Amount)
+	
 	taxes := initProgressiveTax()
 
 	// Calculate Total Tax
