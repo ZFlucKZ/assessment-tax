@@ -14,3 +14,7 @@ type Tax struct {
 type TaxResponse struct {
 	Tax float64 `json:"tax"`
 }
+
+type TaxRefundResponse struct {
+	TaxRefund float64 `json:"taxRefund"`
+}
