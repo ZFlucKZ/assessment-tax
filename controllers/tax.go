@@ -10,8 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type TaxController struct{
-}
+type TaxController struct{}
 
 func (t TaxController) CalculateTaxHandler(c echo.Context) error {
 	taxDetails := new(dto.Tax)
