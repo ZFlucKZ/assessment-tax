@@ -29,6 +29,9 @@ func (p *ProgressiveTax) calculateTax(income float64) (float64, dto.TaxLevel) {
 		level = fmt.Sprintf("%s ขึ้นไป", humanize.Commaf(p.minIncome+1))
 	}
 
+	if p.minIncome == 0 {
+		level = fmt.Sprintf("%s-%s", humanize.Commaf((p.minIncome)), humanize.Commaf(p.maxIncome))	}
+
 	if income < p.minIncome {
 		return 0, dto.TaxLevel{
 			Level: level,
