@@ -33,7 +33,10 @@ func (t TaxController) CalculateTaxHandler(c echo.Context) error {
 
 	taxDetails.Allowances = append(taxDetails.Allowances, dto.AllowanceType{AllowanceType: "Personal", Amount: deduction.Personal})
 
-	tax := handlers.CalculateTotalTax(taxDetails)
+	tax, err := handlers.CalculateTotalTax(taxDetails)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.Err{Message: err.Error()})
+	}
 
 	if tax >= 0 {
 		return c.JSON(http.StatusOK, dto.TaxResponse{Tax: tax})
