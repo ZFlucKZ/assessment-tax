@@ -1,14 +1,27 @@
 package handlers
 
-func calculatePersonalDeductionTax(income float64, personal float64) float64 {
-	return income - personal
-}
+import "github.com/ZFlucKZ/assessment-tax/db"
 
-func calculateDonationDeductionTax(income float64, donation float64) float64 {
-	// donation max 100000
-	if donation > 100000 {
-		donation = 100000
+func calculatePersonalDeductionTax(income float64, personal float64) (float64, error) {
+	personalDeductionDetail, err := db.GetDeductionAmountByDeductionType("Personal")
+	if err != nil {
+		return 0, err
 	}
 
-	return income - donation
+	return income - personalDeductionDetail.Amount, nil
+}
+
+func calculateDonationDeductionTax(income float64, donation float64) (float64, error) {
+	donationDeductionDetail, err := db.GetDeductionAmountByDeductionType("Donation")
+	if err != nil {
+		return 0, err
+	}
+
+	donationAmount := donationDeductionDetail.Amount
+
+	if donation > donationAmount {
+		donation = donationAmount
+	}
+
+	return income - donation, nil
 }
