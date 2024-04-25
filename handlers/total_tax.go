@@ -25,9 +25,17 @@ func CalculateTotalTax(taxDetails *dto.Tax) (float64, []dto.TaxLevel, error) {
 		}
 	}
 
-	taxDetails.TotalIncome = calculatePersonalDeductionTax(taxDetails.TotalIncome, personalAllowance.Amount)
+	var err error
+
+	taxDetails.TotalIncome, err = calculatePersonalDeductionTax(taxDetails.TotalIncome, personalAllowance.Amount)
+	if err != nil {
+		return 0.0, nil, err
+	}
 	
-	taxDetails.TotalIncome = calculateDonationDeductionTax(taxDetails.TotalIncome, donationAllowance.Amount)
+	taxDetails.TotalIncome, err = calculateDonationDeductionTax(taxDetails.TotalIncome, donationAllowance.Amount)
+	if err != nil {
+		return 0.0, nil, err
+	}
 	
 	taxes := initProgressiveTax()
 

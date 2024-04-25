@@ -10,14 +10,21 @@ import (
 	"time"
 
 	"github.com/ZFlucKZ/assessment-tax/config"
+	"github.com/ZFlucKZ/assessment-tax/db"
 	"github.com/ZFlucKZ/assessment-tax/routes"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	config.InitDB()
+	p := config.ConnectDB()
+
+	db.SetDatabase(p)
 
 	e := echo.New()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
 	routes.RegisterRoutes(e)
 
 	e.GET("/", func(c echo.Context) error {

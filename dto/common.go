@@ -1,5 +1,5 @@
 package dto
 
-type Err struct {
+type Message struct {
 	Message string `json:"message"`
 }
