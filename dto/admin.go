@@ -7,3 +7,7 @@ type DeductionAmount struct {
 type ResponsePersonal struct {
 	PersonalDeduction float64 `json:"personalDeduction"`
 }
+
+type ResponseKReceipt struct {
+	KReceipt float64 `json:"kReceipt"`
+}
