@@ -17,8 +17,10 @@ import (
 )
 
 func main() {
-	p := config.ConnectDB()
+	config.SetupEnv()
 
+	p := config.ConnectDB()
+	
 	db.SetDatabase(p)
 
 	e := echo.New()
@@ -35,13 +37,12 @@ func main() {
 		return c.String(http.StatusOK, "OK")
 	})
 
-
 	go func() {
-		e.Start(":" + os.Getenv("PORT"))
+		e.Start(":" + fmt.Sprintf("%d", config.Env.Port))
 	}()
 
-	fmt.Println("Server is running at port", os.Getenv("PORT"))
-	
+	fmt.Println("Server is running at port", fmt.Sprintf("%d", config.Env.Port))
+
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
 
