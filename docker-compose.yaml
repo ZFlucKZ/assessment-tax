@@ -1,3 +1,4 @@
+version: '3.9'
 services:
   postgres:
     image: postgres:16
@@ -9,15 +10,15 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432:5432'
-  assessment-tax:
-    image: darkza5050/assessment-tax:1.0
-    ports:
-      - '5152:8080'
-    environment:
-      - PORT=8080
-      - DATABASE_URL="host=localhost port=5432 user=postgres password=postgres dbname=ktaxes sslmode=disable"
-      - ADMIN_USERNAME=adminTax
-      - ADMIN_PASSWORD=admin!
+  # assessment-tax:
+  #   image: darkza5050/assessment-tax:1.0
+  #   ports:
+  #     - '5152:8080'
+  #   environment:
+  #     PORT: 8080
+  #     DATABASE_URL: 'host=172.17.0.1 port=5432 user=postgres password=postgres dbname=ktaxes sslmode=disable'
+  #     ADMIN_USERNAME: adminTax
+  #     ADMIN_PASSWORD: admin!
 
 volumes:
   postgres_data:

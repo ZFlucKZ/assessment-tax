@@ -20,7 +20,7 @@ func main() {
 	config.SetupEnv()
 
 	p := config.ConnectDB()
-	
+
 	db.SetDatabase(p)
 
 	e := echo.New()
