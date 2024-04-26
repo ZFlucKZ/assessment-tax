@@ -10,4 +10,5 @@ func taxRoutes(e *echo.Echo) {
 
 	tCl := controllers.TaxController{}
 	tax.POST("/calculations", tCl.CalculateTaxHandler)
+	tax.POST("/calculations/upload-csv", tCl.CalculateTaxByCsvFileHandler)
 }
