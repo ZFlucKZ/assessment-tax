@@ -15,4 +15,6 @@ func adminRoutes(e *echo.Echo) {
 	aCl := controllers.AdminController{}
 
 	admin.POST("/deductions/personal", aCl.UpdatePersonalDeduction)
+
+	admin.POST("/deductions/k-receipt", aCl.UpdateKReceiptDeduction)
 }
