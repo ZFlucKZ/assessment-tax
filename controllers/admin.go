@@ -24,7 +24,7 @@ func (a AdminController) UpdatePersonalDeduction(c echo.Context) error {
 
 	amount, err := db.UpdatePersonalDeduction(payload.Amount)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, dto.Message{Message: "Failed to update personal deduction"})
+		return c.JSON(http.StatusInternalServerError, dto.Message{Message: "Failed to update personal deduction. Please try again later."})
 	}
 
 	return c.JSON(http.StatusOK, dto.ResponsePersonal{PersonalDeduction: amount})

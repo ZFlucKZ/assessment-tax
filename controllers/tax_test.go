@@ -18,6 +18,7 @@ import (
 var personalDeduction float64 = 60000.0
 var wht float64 = 25000.0
 var donation float64 = 10000.0
+var KReceipt float64 = 50000.0
 
 func TestCalculateTax(t *testing.T) {
 	tests_progressive_rate := []struct {
@@ -45,6 +46,10 @@ func TestCalculateTax(t *testing.T) {
 				donation = 100000
 			}
 			tt.totalIncome += donation
+			if KReceipt > 50000 {
+				KReceipt = 50000
+			}
+			tt.totalIncome += KReceipt
 
 			e := echo.New()
 			req := httptest.NewRequest(http.MethodPost, "/tax/calculations", strings.NewReader(fmt.Sprintf(`{"totalIncome": %v, "allowances": [{"allowanceType": "donation", "amount": %v}]}`, tt.totalIncome, donation)))
