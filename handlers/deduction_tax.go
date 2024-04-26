@@ -25,3 +25,18 @@ func calculateDonationDeductionTax(income float64, donation float64) (float64, e
 
 	return income - donation, nil
 }
+
+func calculateKReceiptDeductionTax(income float64, kReceipt float64) (float64, error) {
+	kReceiptDeductionDetail, err := db.GetDeductionAmountByDeductionType("KReceipt")
+	if err != nil {
+		return 0, err
+	}
+
+	kReceiptAmount := kReceiptDeductionDetail.Amount
+
+	if kReceipt > kReceiptAmount {
+		kReceipt = kReceiptAmount
+	}
+
+	return income - kReceipt, nil
+}

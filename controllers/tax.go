@@ -30,7 +30,7 @@ func (t TaxController) CalculateTaxHandler(c echo.Context) error {
 
 	tax, taxLevel, err := handlers.CalculateTotalTax(taxDetails)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, dto.Message{Message: "Failed to calculate tax. Please try again later."})
+		return c.JSON(http.StatusInternalServerError, dto.Message{Message: err.Error()})
 	}
 
 	if tax >= 0 {
@@ -90,7 +90,7 @@ func (t TaxController) CalculateTaxByCsvFileHandler(c echo.Context) error {
 
 		tax, _, err := handlers.CalculateTotalTax(&taxDetails)
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, dto.Message{Message: "Failed to calculate tax. Please try again later."})
+			return c.JSON(http.StatusInternalServerError, dto.Message{Message: err.Error()})
 		}
 
 		if tax >= 0 {
